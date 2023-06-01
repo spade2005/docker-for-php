@@ -1,0 +1,52 @@
+version: "1"
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - mysql
+      - redis
+    volumes:
+       - ./app:/app
+       - ./nginx/conf.d:/etc/nginx/conf.d  
+       - ./nginx/logs:/var/log/nginx  
+  
+  php-fpm:
+    build: fpm
+    container_name: php-fpm
+    restart: always
+    ports:
+      - '9000:9000'
+    links:
+      - mysql
+      - redis
+    volumes:
+      - ./app:/app
+      - ./fpm/php/php.ini:/usr/local/etc/php/php.ini
+      - ./fpm/logs:/usr/local/etc/php/var/log
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=flower
+      - MYSQL_USER=flower
+      - MYSQL_PASSWORD=flower123
+    volumes:
+      - ./mysql:/var/lib/mysql
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
