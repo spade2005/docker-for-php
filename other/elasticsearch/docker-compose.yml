@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  elasticsearch:
+    container_name: php-es
+    image: elasticsearch:7.17.9
+    hostname: php-es
+    restart: always
+    environment:
+      - discovery.type=single-node
+      #- ES_JAVA_OPTS="-Xms2G -Xmx4G"
+    volumes:
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/data:/usr/share/elasticsearch/data/
+      - ./es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"

@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.10-management-alpine
+    hostname: php-mq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mq123
+      - RABBITMQ_LOG_BASE=/var/log/rabbitmq
+      - RABBITMQ_LOGS=${RABBITMQ_LOG_BASE}/rabbit_log.log
+    volumes:
+      - ./mq/log:/var/log/rabbitmq
+      - ./mq/data:/var/lib/rabbitmq
+      - ./mq/conf.d:/etc/rabbitmq/conf.d
+    ports:
+      - "5672:5672"
+      - "15672:15672"
