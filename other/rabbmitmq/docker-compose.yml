@@ -3,7 +3,7 @@ version: '2'
 services:
   rabbitmq:
     container_name: rabbitmq
-    image: rabbitmq:3.10-management-alpine
+    image: rabbitmq:3.12-management-alpine
     hostname: php-mq
     restart: always
     environment:
