@@ -1,0 +1,20 @@
+## docker
+docker build --force-rm --no-cache -t spade/php8.1:v1 .
+docker rmi spade/php8.1:v1
+
+
+
+
+
+docker exec -it  -u root nginx /bin/sh
+
+
+# import1
+docker export [container id] > hangger_server.tar
+
+# import 2
+docker import - new_hangger_server < hangger_server.tar
+
+
+// www to xxx
+//docker cp 96f7f14e99ab:/www/ /www/xx
