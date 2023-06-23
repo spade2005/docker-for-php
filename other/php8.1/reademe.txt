@@ -7,7 +7,7 @@ docker rmi spade/php8.1:v1
 
 
 docker exec -it  -u root nginx /bin/sh
-
+docker run --name php-8.1 -d --net=host cb1af7f4cca1
 
 # import1
 docker export [container id] > hangger_server.tar

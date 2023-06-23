@@ -43,4 +43,4 @@ services:
       - ./php8.1-cli/logs:/usr/local/etc/php/var/log
       - ./php8.1-cli/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
       - ./php8.1-cli/supervisor/conf.d:/etc/supervisor/conf.d
-    command: ["supervisord", "-n","-c", "/etc/supervisor/supervisord.conf"
+    command: ["supervisord", "-n","-c", "/etc/supervisor/supervisord.conf"]
