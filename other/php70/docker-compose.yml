@@ -1,0 +1,47 @@
+version: "1"
+services:
+  php-fpm:
+    build: fpm
+    container_name: php-7.0fpm
+    restart: always
+    ports:
+      - '880:80'
+      - '8443:443'
+    environment:
+      - TZ=Asia/Shanghai
+    tty: true
+    links:
+      - mysql
+      - redis
+    volumes:
+      - /home/zy/var/www/:/app
+      - ./fpm/php.ini:/etc/php/7.0/cli/php.ini
+      - ./fpm/fpm.php.ini:/etc/php/7.0/fpm/php.ini
+      - ./fpm/php-fpm.conf:/etc/php/7.0/fpm/php-fpm.conf
+      - ./fpm/site-enable:/etc/nginx/sites-enabled
+      - ./fpm/supervisor:/etc/supervisor
+    command: ["supervisord", "-n","-c", "/etc/supervisor/supervisord.conf"]
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql5.7
+    ports:
+      - "3307:3306"
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=crm
+      - MYSQL_USER=crm
+      - MYSQL_PASSWORD=crm123
+    volumes:
+      - ./mysql:/var/lib/mysql
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "6389:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+

@@ -25,6 +25,9 @@ RUN apt-get update \
   && docker-php-ext-install -j$(nproc) bcmath \
   && docker-php-ext-install -j$(nproc) xml \
   && docker-php-ext-install -j$(nproc) sockets \
+  && docker-php-ext-install -j$(nproc) calendar \
+  && docker-php-ext-install -j$(nproc) pcntl \
+  && docker-php-ext-install -j$(nproc) gettext \
   && docker-php-ext-install -j$(nproc) opcache \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
